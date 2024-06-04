@@ -22,7 +22,7 @@
 use bb8_redis::redis::{AsyncCommands, LposOptions};
 
 #[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
-use cc_utils::prelude::*;
+use cc_utils::results::MResult;
 
 #[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 use chrono::Duration;
