@@ -45,10 +45,14 @@ pub type UserId = u64;
 /// Holds user token.
 #[derive(Deserialize, Serialize)]
 pub struct UserToken {
-  user_id: UserId,
+  pub user_id: UserId,
   token_str: String,
   #[serde(with = "ts_seconds")]
   birth: DateTime<Utc>,
+}
+
+impl UserToken {
+  pub fn new(id: UserId) -> MResult<Self> { generate_token(id) }
 }
 
 /// Token as string (e.g. one that got from `Authorization` header).
