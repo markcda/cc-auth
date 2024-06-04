@@ -18,14 +18,24 @@
 //! }
 //! ```
 
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 use bb8_redis::redis::{AsyncCommands, LposOptions};
+
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 use cc_utils::prelude::*;
-use chrono::{DateTime, Duration, Utc, serde::ts_seconds};
+
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
+use chrono::Duration;
+
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 use passwords::PasswordGenerator;
+
+use chrono::{DateTime, Utc, serde::ts_seconds};
 use serde::{Deserialize, Serialize};
 use sha3::{Digest, Sha3_256};
 
 /// Standard token length (64 UTF-8 symbols).
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 const TOKEN_LENGTH: usize = 64;
 
 /// Prefix for tokens' location in Redis-like database.
@@ -51,6 +61,7 @@ pub struct UserToken {
   birth: DateTime<Utc>,
 }
 
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 impl UserToken {
   pub fn new(id: UserId) -> MResult<Self> { generate_token(id) }
 }
@@ -76,6 +87,7 @@ pub fn get_user_tokens_list_name(user_id: UserId) -> String {
 }
 
 /// Authorizes the user by creating a new token for him if the data is correct.
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 pub async fn log_in(
   user_login: String,
   salt_db: &[u8],
@@ -94,6 +106,7 @@ pub async fn log_in(
 }
 
 /// Validates the user by token via Redis-like DB.
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 pub async fn check_token(
   token: &ApiToken,
   cacher: &bb8_redis::bb8::Pool<bb8_redis::RedisConnectionManager>,
@@ -112,6 +125,7 @@ pub async fn check_token(
 }
 
 /// Removes the valid token from Redis-like DB.
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 pub async fn check_and_remove_token(
   token: &ApiToken,
   cacher: &bb8_redis::bb8::Pool<bb8_redis::RedisConnectionManager>,
@@ -126,6 +140,7 @@ pub async fn check_and_remove_token(
 }
 
 /// Creates fixed length password generator.
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 fn get_password_generator(length: usize) -> PasswordGenerator {
   PasswordGenerator {
     length,
@@ -140,6 +155,7 @@ fn get_password_generator(length: usize) -> PasswordGenerator {
 }
 
 /// Generates new token for user.
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 pub fn generate_token(user_id: UserId) -> MResult<UserToken> {
   Ok(UserToken {
     user_id,
@@ -149,6 +165,7 @@ pub fn generate_token(user_id: UserId) -> MResult<UserToken> {
 }
 
 /// Generates salt for new user.
+#[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 pub fn generate_salt() -> MResult<String> {
   Ok(get_password_generator(16).generate_one()?)
 }
