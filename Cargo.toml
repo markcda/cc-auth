@@ -1,7 +1,7 @@
 [package]
 name = "cc-auth"
 description = "Simple backend authorization system"
-version = "0.2.3"
+version = "0.3.0"
 edition = "2021"
 license = "MIT"
 authors = ["Klimenty Titov <aclo.create@gmail.com>"]
