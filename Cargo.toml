@@ -19,4 +19,4 @@ cc-utils = { git = "https://github.com/markcda/cc-utils.git", branch = "new-salv
 passwords = "3.1"
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "wasm64"))'.dependencies]
-cc-utils = { git = "https://github.com/markcda/cc-utils.git", default-features = false }
+cc-utils = { git = "https://github.com/markcda/cc-utils.git", branch = "new-salvo-test", default-features = false }
