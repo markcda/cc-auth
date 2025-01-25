@@ -1,0 +1,122 @@
+{
+  "project_name": "cc-auth",
+  "langs": [
+    "Rust"
+  ],
+  "targets": [
+    {
+      "arch": "x86_64",
+      "os": "Linux",
+      "derivative": "any",
+      "version": "No"
+    },
+    {
+      "arch": "wasm32",
+      "os": {
+        "Other": "web"
+      },
+      "derivative": "any",
+      "version": "No"
+    }
+  ],
+  "deploy_toolkit": null,
+  "cache_files": [
+    ".git",
+    "Cargo.lock",
+    "target"
+  ],
+  "pipelines": [
+    {
+      "title": "lint",
+      "desc": "Got from `LBRP Pipeline`.",
+      "info": "lbrp@0.1.0",
+      "tags": [
+        "cargo",
+        "upx",
+        "reqwest"
+      ],
+      "actions": [
+        {
+          "title": "Lint x86_64",
+          "desc": "",
+          "info": "cargo-clippy@0.1.0",
+          "tags": [
+            "cargo",
+            "clippy"
+          ],
+          "action": {
+            "PreBuild": {
+              "supported_langs": [
+                "Rust"
+              ],
+              "commands": [
+                {
+                  "bash_c": "cargo clippy",
+                  "ignore_fails": false,
+                  "show_success_output": true,
+                  "show_bash_c": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Lint wasm32",
+          "desc": "",
+          "info": "cargo-clippy@0.1.0",
+          "tags": [
+            "cargo",
+            "clippy"
+          ],
+          "action": {
+            "PreBuild": {
+              "supported_langs": [
+                "Rust"
+              ],
+              "commands": [
+                {
+                  "bash_c": "cargo clippy --target wasm32-unknown-unknown",
+                  "ignore_fails": false,
+                  "show_success_output": true,
+                  "show_bash_c": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Format",
+          "desc": "Format `.rs` files",
+          "info": "cargo-fmt@0.1.0",
+          "tags": [
+            "rust",
+            "cargo",
+            "fmt"
+          ],
+          "action": {
+            "PreBuild": {
+              "supported_langs": [
+                "Rust"
+              ],
+              "commands": [
+                {
+                  "bash_c": "cargo fmt -- --config tab_spaces=2,max_width=120 */**/*.rs",
+                  "ignore_fails": false,
+                  "show_success_output": false,
+                  "show_bash_c": true,
+                  "only_when_fresh": false
+                }
+              ]
+            }
+          },
+          "exec_in_project_dir": true
+        }
+      ],
+      "default": true
+    }
+  ],
+  "artifacts": [],
+  "variables": [],
+  "place_artifacts_into_project_root": [],
+  "version": 2
+}
